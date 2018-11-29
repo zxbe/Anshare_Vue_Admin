@@ -14,6 +14,7 @@ module.exports = {
   devServer: {
     port: 80,
   },
+  lintOnSave:false,
   // vue-cli3内部的webpack配置通过webpack-chain维护
   // 链式操作可参考 https://cli.vuejs.org/zh/guide/webpack.html
   chainWebpack: (config) => {

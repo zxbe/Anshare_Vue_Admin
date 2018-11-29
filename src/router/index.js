@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import Vue from 'vue'
 import Router from 'vue-router'
 // in development env not use Lazy Loading,because Lazy Loading too many pages will cause webpack hot update too slow.so only in production use Lazy Loading
@@ -14,8 +16,9 @@ Vue.use(Router)
   * noDropdown : if `noDropdown:true` will not has submenu in the sidebar
   **/
 export const constantRouterMap = [
-  { path: '/login', component: ()=> import('@/views/login/index'), hidden: true },
-  { path: '/404', component: ()=>import('@/views/404'), hidden: true },
+
+  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  { path: '/404', component: () => import('@/views/404'), hidden: true },
   {
     path: '/',
     component: Layout,
