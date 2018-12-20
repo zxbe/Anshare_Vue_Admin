@@ -1,7 +1,7 @@
 import {
   asyncRouterMap,
   constantRouterMap,
-} from '@/router/index';
+} from '@/router/index'
 
 /**
  * 判断是否有路由权限
@@ -10,9 +10,9 @@ import {
  */
 function hasPermission(roles, route) {
   if (route.name) {
-    return roles.some(role => route.name.includes(role));
+    return roles.some(role => route.name.includes(role))
   }
-  return true;
+  return true
 }
 
 /**
@@ -20,17 +20,17 @@ function hasPermission(roles, route) {
  * @param asyncRouterMap
  * @param roles
  */
-function filterAsyncRouter(asyncRouterMap, roleauthname) {
-  const accessedRouters = asyncRouterMap.filter((route) => {
+function filterAsyncRouter(_asyncRouterMap, roleauthname) {
+  const accessedRouters = _asyncRouterMap.filter((route) => {
     if (hasPermission(roleauthname, route)) {
       if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, roleauthname);
+        route.children = filterAsyncRouter(route.children, roleauthname)
       }
-      return true;
+      return true
     }
-    return false;
-  });
-  return accessedRouters;
+    return false
+  })
+  return accessedRouters
 }
 
 const permission = {
@@ -40,8 +40,8 @@ const permission = {
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
-      state.addRouters = routers;
-      state.routers = constantRouterMap.concat(routers);
+      state.addRouters = routers
+      state.routers = constantRouterMap.concat(routers)
     },
   },
   actions: {
@@ -51,20 +51,14 @@ const permission = {
       return new Promise((resolve) => {
         const {
           roleauthname,
-        } = data;
-        let accessedRouters;
+        } = data
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, roleauthname)
 
-        accessedRouters = filterAsyncRouter(asyncRouterMap, roleauthname);
-
-        commit('SET_ROUTERS', accessedRouters);
-        resolve();
-      });
+        commit('SET_ROUTERS', accessedRouters)
+        resolve()
+      })
     },
   },
-};
+}
 
-export default permission;
-
-
-// var => let
-//
+export default permission
