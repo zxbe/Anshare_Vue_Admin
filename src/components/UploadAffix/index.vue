@@ -6,7 +6,7 @@
   :action="baseUrl"
    :data="Params['Param']"
   :headers="token"
-   v-if="!Params.IsDetail" 
+   v-if="!Params.IsDetail"
    :show-file-list = "false"
    :on-success="uploadSuccess"
 >
@@ -14,7 +14,7 @@
 </el-upload>
 
    <el-table :default-sort="{prop: 'name', order: 'descending'}" :data="filelist"  v-loading.body="listLoading" element-loading-text="拼命加载中" border fit highlight-current-row>
-  
+
       <el-table-column label="文件名" prop="filename" sortable align="center">
         <template slot-scope="scope">
           {{scope.row.filename}}
@@ -25,7 +25,7 @@
           <span>{{timestampToTime(scope.row.timestamp)}}</span>
         </template>
       </el-table-column>
-   
+
 
       <el-table-column label="操作" align="center" min-width="110px">
         <template slot-scope="scope">
@@ -40,39 +40,40 @@
 
 
 <script>
-import { getToken } from "@/utils/auth";
-import {  GetFileList, deletefile } from "@/api/public/file";
-import { timestampToTime } from "@/utils/index";
-import download from '@/utils/download'
+import { getToken } from '@/utils/auth';
+import { GetFileList, deletefile } from '@/api/Public/file';
+import { timestampToTime } from '@/utils/index';
+import download from '@/utils/download';
+
 export default {
-  name: "UploadAffix",
+  name: 'UploadAffix',
   data() {
     return {
       filelist: null,
       token: {
-        auth: getToken()
+        auth: getToken(),
       },
       listLoading: false,
-      baseUrl:`${process.env.BASE_API}file/upload`
+      baseUrl: `${process.env.BASE_API}file/upload`,
     };
   },
 
   props: {
     Params: {
-      type: Object    //  IsDetail true则   只显示文件list以及download button
-    }
+      type: Object, //  IsDetail true则   只显示文件list以及download button
+    },
   },
   methods: {
     exportfile(id) {
       download(id);
     },
     delete_file(id) {
-      this.$confirm("确认删除?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
       }).then(() => {
-        deletefile(id).then(res => {
+        deletefile(id).then((res) => {
           this.fetchData_File(id);
         });
       });
@@ -84,23 +85,23 @@ export default {
     fetchData_File(id) {
       this.listLoading = true;
 
-      GetFileList(id).then(response => {
+      GetFileList(id).then((response) => {
         this.filelist = response.data.list;
         this.listLoading = false;
       });
     },
-    timestampToTime
+    timestampToTime,
   },
   watch: {
-    "Params.Param.MasterID": {
-      handler: function(id) {
+    'Params.Param.MasterID': {
+      handler(id) {
         this.$nextTick(() => {
           this.fetchData_File(id);
         });
       },
-      immediate: true
-    }
-  }
+      immediate: true,
+    },
+  },
 };
 </script>
 
