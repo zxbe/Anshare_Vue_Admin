@@ -88,10 +88,10 @@
 </template>
 
 <script>
-import GithubCorner from '@/components/GithubCorner'
-import { mapGetters } from 'vuex'
-import { parseTime } from '@/utils/index'
-import axios from 'axios'
+import GithubCorner from '@/components/GithubCorner';
+import { mapGetters } from 'vuex';
+import { parseTime } from '@/utils/index';
+import axios from 'axios';
 
 export default {
   name: 'DashBoard',
@@ -106,28 +106,28 @@ export default {
       request: '',
       msg: '',
       history: [],
-    }
+    };
   },
   computed: {
     ...mapGetters(['name', 'roles', 'AllRouters']),
   },
   created() {
-    this.GetNowTime()
-    this.GetReport()
+    this.GetNowTime();
+    this.GetReport();
   },
   methods: {
     getImage(url) {
       if (url !== undefined) {
-        return url.replace('https://', 'https://images.weserv.nl/?url=')
+        return url.replace('https://', 'https://images.weserv.nl/?url=');
       }
     },
     GetNowTime() {
       setInterval(() => {
-        this.currentDate = parseTime(new Date())
-      }, 1000)
+        this.currentDate = parseTime(new Date());
+      }, 1000);
     },
     chat() {
-      this.history.push(this.request)
+      this.history.push(this.request);
       axios
         .post('/Chat', {
           key: '050b4fa163454f13bf3372cb1715f5d4',
@@ -135,29 +135,29 @@ export default {
           userid: 'a123456',
         })
         .then((response) => {
-          console.log(response)
-          this.request = ''
-          this.history.push(response.data.text)
+          console.log(response);
+          this.request = '';
+          this.history.push(response.data.text);
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
     GetReport() {
       axios.get('/report/hot').then((response) => {
-        console.log(response)
-        this.report = response.data.recent
-      })
+        console.log(response);
+        this.report = response.data.recent;
+      });
     },
     GetMusic() {
       axios.get('/music?id=3778678&limit=30').then((response) => {
-        this.music = response.data
-        console.log(this.music)
-      })
+        this.music = response.data;
+        console.log(this.music);
+      });
     },
   },
 
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

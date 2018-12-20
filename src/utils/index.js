@@ -1,17 +1,17 @@
 
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
-    return null
+    return null;
   }
-  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
-  let date
+  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
+  let date;
   if (typeof time === 'object') {
-    date = time
+    date = time;
   } else {
     if (time.length === 10) {
-      time = parseInt(time, 10) * 1000
+      time = parseInt(time, 10) * 1000;
     }
-    date = new Date(time)
+    date = new Date(time);
   }
   const formatObj = {
     y: date.getFullYear(),
@@ -21,39 +21,39 @@ export function parseTime(time, cFormat) {
     i: date.getMinutes(),
     s: date.getSeconds(),
     a: date.getDay(),
-  }
+  };
   const timeStr = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key]
-    if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1]
+    let value = formatObj[key];
+    if (key === 'a') return ['一', '二', '三', '四', '五', '六', '日'][value - 1];
     if (result.length > 0 && value < 10) {
-      value = `0${value}`
+      value = `0${value}`;
     }
-    return value || 0
-  })
+    return value || 0;
+  });
 
-  return timeStr
+  return timeStr;
 }
 
 export function formatTime(time, option) {
-  time = +time * 1000
-  const d = new Date(time)
-  const now = Date.now()
+  time = +time * 1000;
+  const d = new Date(time);
+  const now = Date.now();
 
-  const diff = (now - d) / 1000
+  const diff = (now - d) / 1000;
 
   if (diff < 30) {
-    return '刚刚'
+    return '刚刚';
   } if (diff < 3600) { // less 1 hour
-    return `${Math.ceil(diff / 60)}分钟前`
+    return `${Math.ceil(diff / 60)}分钟前`;
   } if (diff < 3600 * 24) {
-    return `${Math.ceil(diff / 3600)}小时前`
+    return `${Math.ceil(diff / 3600)}小时前`;
   } if (diff < 3600 * 24 * 2) {
-    return '1天前'
+    return '1天前';
   }
   if (option) {
-    return parseTime(time, option)
+    return parseTime(time, option);
   }
-  return `${d.getMonth() + 1}月${d.getDate()}日${d.getHours()}时${d.getMinutes()}分`
+  return `${d.getMonth() + 1}月${d.getDate()}日${d.getHours()}时${d.getMinutes()}分`;
 }
 export function timestampToTime(timestamp) {
   const date = new Date(timestamp); // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -63,7 +63,7 @@ export function timestampToTime(timestamp) {
   const h = `${date.getHours() + 1 < 10 ? `0${date.getHours() + 1}` : date.getHours() + 1}:`;
   const m = `${date.getMinutes() + 1 < 10 ? `0${date.getMinutes() + 1}` : date.getMinutes() + 1}:`;
   const s = (date.getSeconds() + 1 < 10 ? `0${date.getSeconds() + 1}` : date.getSeconds() + 1);
-  console.log(Y + M + D + h + m + s)
+  console.log(Y + M + D + h + m + s);
   return Y + M + D + h + m + s;
 }
 
