@@ -1,48 +1,67 @@
 <template>
-
-  <el-container class="widget-config-container">
-    <el-header style="height:auto;padding-left:0px">
-
+  <ElContainer class="widget-config-container">
+    <ElHeader style="height:auto;padding-left:0px">
       <div
         :class="{active: configTab=='formcontainer'}"
         class="config-tab2"
-        @click="handleConfigSelect('formcontainer')">表单设计</div>
+        @click="handleConfigSelect('formcontainer')"
+      >
+        表单设计
+      </div>
       <div
         :class="{active: configTab=='listcontainer'}"
         class="config-tab2"
-        @click="handleConfigSelect('listcontainer')">列表设计</div>
+        @click="handleConfigSelect('listcontainer')"
+      >
+        列表设计
+      </div>
       <span
         v-if="selectform!==''"
-        style="">正在制作:{{ selectform }}表</span>
+        style=""
+      >
+        正在制作:{{ selectform }}表
+      </span>
 
       <div style="float:right">
-        <el-button
+        <ElButton
           style="border:none"
           type="text"
           size="medium"
           icon="el-icon-star-on
 "
-          @click="save">保存</el-button>
-        <el-button
+          @click="save"
+        >
+          保存
+        </ElButton>
+        <ElButton
           style="border:none;"
           type="text"
           size="medium"
           icon="el-icon-info"
-          @click="openmodal" >选择表</el-button>
-        <el-button
+          @click="openmodal"
+        >
+          选择表
+        </ElButton>
+        <ElButton
           type="text"
           size="medium"
           icon="el-icon-view"
-          @click="handlePreview">预览</el-button>
-        <el-button
+          @click="handlePreview"
+        >
+          预览
+        </ElButton>
+        <ElButton
           type="text"
           size="medium"
           icon="el-icon-tickets"
-          @click="handleGenerateJson">生成JSON</el-button>
+          @click="handleGenerateJson"
+        >
+          生成JSON
+        </ElButton>
       </div>
 
 
-      <cus-dialog
+      <CusDialog
         ref="widgetPreview"
         :visible="previewVisible"
         width="1000px"
@@ -50,27 +69,30 @@
         @on-close="previewVisible = false"
         @on-submit="handleTest"
       >
-        <generate-form
+        <GenerateForm
           v-if="previewVisible"
           ref="generateForm"
           :data="widgetForm"
           :remote="remoteFuncs"
-          :value="widgetModels">
-
+          :value="widgetModels"
+        >
           <template
             slot="blank"
-            slot-scope="scope">
-            宽度：<el-input
+            slot-scope="scope"
+          >
+            宽度：<ElInput
               v-model="scope.model.blank.width"
-              style="width: 100px"/>
-            高度：<el-input
+              style="width: 100px"
+            />
+            高度：<ElInput
               v-model="scope.model.blank.height"
-              style="width: 100px"/>
+              style="width: 100px"
+            />
           </template>
-        </generate-form>
-      </cus-dialog>
+        </GenerateForm>
+      </CusDialog>
 
-      <cus-dialog
+      <CusDialog
         ref="jsonPreview"
         :visible="jsonVisible"
         width="800px"
@@ -79,16 +101,22 @@
       >
         <div
           id="jsoneditor"
-          style="height: 400px;width: 100%;">{{ jsonTemplate }}</div>
+          style="height: 400px;width: 100%;"
+        >
+          {{ jsonTemplate }}
+        </div>
 
         <template slot="action">
-          <el-button
+          <ElButton
             id="copybtn"
-            data-clipboard-target=".ace_text-input">双击复制</el-button>
+            data-clipboard-target=".ace_text-input"
+          >
+            双击复制
+          </ElButton>
         </template>
-      </cus-dialog>
+      </CusDialog>
 
-      <cus-dialog
+      <CusDialog
         ref="codePreview"
         :visible="codeVisible"
         :action="false"
@@ -98,34 +126,42 @@
       >
         <div
           id="codeeditor"
-          style="height: 500px; width: 100%;">{{ htmlTemplate }}</div>
-      </cus-dialog>
+          style="height: 500px; width: 100%;"
+        >
+          {{ htmlTemplate }}
+        </div>
+      </CusDialog>
 
 
-      <el-dialog
+      <ElDialog
         :visible.sync="dialogFormVisible"
-        title="选择表单" >
-        <el-select
+        title="选择表单"
+      >
+        <ElSelect
           v-model="selectform"
-          placeholder="请选择">
-          <el-option
+          placeholder="请选择"
+        >
+          <ElOption
             v-for="(item, index) in tablelist"
             :key="index"
             :label="item.table_name"
-            :value="item.table_name"/>
-        </el-select>
+            :value="item.table_name"
+          />
+        </ElSelect>
 
-        <el-button @click="select">选择</el-button>
-      </el-dialog>
+        <ElButton @click="select">
+          选择
+        </ElButton>
+      </ElDialog>
+    </ElHeader>
 
-    </el-header>
-
-    <el-container v-show="configTab=='formcontainer'||configTab=='form'||configTab=='widget'">
-      <el-aside style="width: 20%;max-width:250px">
-
+    <ElContainer v-show="configTab=='formcontainer'||configTab=='form'||configTab=='widget'">
+      <ElAside style="width: 20%;max-width:250px">
         <div class="components-list">
-          <div class="widget-cate">基础字段</div>
-          <draggable
+          <div class="widget-cate">
+            基础字段
+          </div>
+          <Draggable
             :list="basicComponents"
             :options="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
             :move="handleMove"
@@ -133,22 +169,25 @@
             @end="handleMoveEnd"
             @start="handleMoveStart"
           >
-
             <li
               v-for="(item, index) in basicComponents"
               :key="index"
-              class="form-edit-widget-label">
+              class="form-edit-widget-label"
+            >
               <a>
-                <icon
+                <Icon
                   :name="item.icon"
-                  class="icon"/>
+                  class="icon"
+                />
                 <span>{{ item.name }}</span>
               </a>
             </li>
-          </draggable>
+          </Draggable>
 
-          <div class="widget-cate">高级字段</div>
-          <draggable
+          <div class="widget-cate">
+            高级字段
+          </div>
+          <Draggable
             :list="advanceComponents"
             :options="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
             :move="handleMove"
@@ -156,22 +195,25 @@
             @end="handleMoveEnd"
             @start="handleMoveStart"
           >
-
             <li
               v-for="(item, index) in advanceComponents"
               :key="index"
-              class="form-edit-widget-label">
+              class="form-edit-widget-label"
+            >
               <a>
-                <icon
+                <Icon
                   :name="item.icon"
-                  class="icon"/>
+                  class="icon"
+                />
                 <span>{{ item.name }}</span>
               </a>
             </li>
-          </draggable>
+          </Draggable>
 
-          <div class="widget-cate">布局字段</div>
-          <draggable
+          <div class="widget-cate">
+            布局字段
+          </div>
+          <Draggable
             :list="layoutComponents"
             :options="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}"
             :move="handleMove"
@@ -179,78 +221,78 @@
             @end="handleMoveEnd"
             @start="handleMoveStart"
           >
-
             <li
               v-for="(item, index) in layoutComponents"
               :key="index"
-              class="form-edit-widget-label data-grid">
+              class="form-edit-widget-label data-grid"
+            >
               <a>
-                <icon
+                <Icon
                   :name="item.icon"
-                  class="icon"/>
+                  class="icon"
+                />
                 <span>{{ item.name }}</span>
               </a>
             </li>
-          </draggable>
+          </Draggable>
         </div>
-
-      </el-aside>
-      <el-container
+      </ElAside>
+      <ElContainer
         class="center-container"
-        direction="vertical">
-
-        <el-main :class="{'widget-empty': widgetForm.list.length == 0}">
-
-          <widget-form
+        direction="vertical"
+      >
+        <ElMain :class="{'widget-empty': widgetForm.list.length == 0}">
+          <WidgetForm
             ref="widgetForm"
             :data="widgetForm"
-            :select.sync="widgetFormSelect"/>
-        </el-main>
-      </el-container>
+            :select.sync="widgetFormSelect"
+          />
+        </ElMain>
+      </ElContainer>
 
-      <el-aside
+      <ElAside
         class="widget-config-container"
-        style="width:30%;">
-        <el-container>
-          <el-header height="45px">
+        style="width:30%;"
+      >
+        <ElContainer>
+          <ElHeader height="45px">
             <div
               :class="{active: configTab=='widget'||configTab=='formcontainer'}"
               class="config-tab"
-              @click="handleConfigSelect('widget')">字段属性</div>
+              @click="handleConfigSelect('widget')"
+            >
+              字段属性
+            </div>
             <div
               :class="{active: configTab=='form'}"
               class="config-tab"
-              @click="handleConfigSelect('form')">表单属性</div>
-
-          </el-header>
-          <el-main class="config-content">
-            <widget-config
+              @click="handleConfigSelect('form')"
+            >
+              表单属性
+            </div>
+          </ElHeader>
+          <ElMain class="config-content">
+            <WidgetConfig
               v-show="configTab=='widget'||configTab=='formcontainer'"
-              :data="widgetFormSelect"/>
-            <form-config
+              :data="widgetFormSelect"
+            />
+            <FormConfig
               v-show="configTab=='form'"
-              :data="widgetForm.config"/>
-          </el-main>
-        </el-container>
-
-      </el-aside>
-
-    </el-container>
-
-
-    <el-container v-show="configTab=='listcontainer'">
+              :data="widgetForm.config"
+            />
+          </ElMain>
+        </ElContainer>
+      </ElAside>
+    </ElContainer>
 
 
-      <list-config
+    <ElContainer v-show="configTab=='listcontainer'">
+      <ListConfig
         :config="widgetForm.config"
-        :tablename="selectform"/>
-
-    </el-container>
-
-
-  </el-container>
-
-
+        :tablename="selectform"
+      />
+    </ElContainer>
+  </ElContainer>
 </template>
 
 <script>
@@ -464,7 +506,7 @@ export default {
 @import './styles/index.scss';
 
 .widget-empty{
-  background: url('../../assets/form_bg.png') no-repeat;
+  // background: url('~@/assets/form_bg.png') no-repeat;
   background-position: 50% 30%;
   background-size:80%;
   // background-size: 30% 30%;

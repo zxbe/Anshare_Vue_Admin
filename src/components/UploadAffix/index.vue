@@ -1,6 +1,6 @@
 <template>
   <div class="upload-container">
-    <el-upload
+    <ElUpload
       v-if="!Params.IsDetail"
       ref="upload"
       :action="baseUrl"
@@ -10,13 +10,16 @@
       :on-success="uploadSuccess"
       class="upload-demo"
     >
-      <el-button
+      <ElButton
         size="small"
         style="float:left;margin-top:10px 0"
-        type="primary">点击上传</el-button>
-    </el-upload>
+        type="primary"
+      >
+        点击上传
+      </ElButton>
+    </ElUpload>
 
-    <el-table
+    <ElTable
       v-loading.body="listLoading"
       :default-sort="{prop: 'name', order: 'descending'}"
       :data="filelist"
@@ -25,45 +28,54 @@
       fit
       highlight-current-row
     >
-      <el-table-column
+      <ElTableColumn
         label="文件名"
         prop="filename"
         sortable
-        align="center">
-        <template slot-scope="scope">{{ scope.row.filename }}</template>
-      </el-table-column>
-      <el-table-column
+        align="center"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.filename }}
+        </template>
+      </ElTableColumn>
+      <ElTableColumn
         label="上传时间"
         prop="timestamp"
         sortable
-        align="center">
+        align="center"
+      >
         <template slot-scope="scope">
           <span>{{ timestampToTime(scope.row.timestamp) }}</span>
         </template>
-      </el-table-column>
+      </ElTableColumn>
 
-      <el-table-column
+      <ElTableColumn
         label="操作"
         align="center"
-        min-width="110px">
+        min-width="110px"
+      >
         <template slot-scope="scope">
-          <el-button
+          <ElButton
             :disabled="false"
             type="success"
             size="small"
             @click="exportfile(scope.row.id)"
-          >下载</el-button>
+          >
+            下载
+          </ElButton>
 
-          <el-button
+          <ElButton
             v-if="!Params.IsDetail"
             :disabled="false"
             type="danger"
             size="small"
             @click="delete_file(scope.row.id)"
-          >删除</el-button>
+          >
+            删除
+          </ElButton>
         </template>
-      </el-table-column>
-    </el-table>
+      </ElTableColumn>
+    </ElTable>
   </div>
 </template>
 <script>
@@ -76,9 +88,11 @@ export default {
   name: 'UploadAffix',
 
   props: {
-    Params: {
+    params: {
       type: Object, //  IsDetail true则   只显示文件list以及download button
-      default: () => ({}),
+      default: () => ({
+        IsDetail: false,
+      }),
     },
   },
   data() {
