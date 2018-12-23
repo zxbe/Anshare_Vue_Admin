@@ -1,3 +1,10 @@
+/*
+ * @Author: BoBo
+ * @Date: 2018-12-22 16:25:54
+ * @Last Modified by:   BoBo
+ * @Last Modified time: 2018-12-22 16:25:54
+ */
+
 /* eslint-disable no-new */
 import Vue from 'vue'
 import ElementUI from 'element-ui'
