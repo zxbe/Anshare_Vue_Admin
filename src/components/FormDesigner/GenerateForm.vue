@@ -51,7 +51,6 @@
             :params="upload_params||item.options.uploadParams"/>
         </template>
 
-
         <template v-else>
           <genetate-form-item
             :key="item.key"
