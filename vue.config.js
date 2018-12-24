@@ -1,8 +1,9 @@
+/* eslint-disable prefer-destructuring */
 /*
  * @Author: BoBo
  * @Date: 2018-12-23 10:59:19
  * @Last Modified by: BoBo
- * @Last Modified time: 2018-12-23 11:01:05
+ * @Last Modified time: 2018-12-24 18:03:16
  */
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
@@ -66,8 +67,12 @@ module.exports = {
   // 配置 webpack-dev-server 行为。
   devServer: {
     open: process.platform === 'bobo',
-    host: 'localhost',
+    host: '127.0.0.1',
     port: 8088,
+    hot: true,
+    hotOnly: true,
+    disableHostCheck: true, // 坑！！ 不加会无限提示 热更新 websocket连接失败
+
     // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/cli-service.md#配置代理
     proxy: {
       '/weather': {
@@ -91,13 +96,7 @@ module.exports = {
           '^/report': '', // 这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
         },
       },
-      '/report/hot': {
-        target: 'https://news-at.zhihu.com/api/4/news/hot', // 设置你调用的接口域名和端口号 别忘了加http
-        changeOrigin: true,
-        pathRewrite: {
-          '^/report/hot': '', // 这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
-        },
-      },
+
       '/music': {
         target: 'http://music.163.com/api/playlist/detail', // 设置你调用的接口域名和端口号 别忘了加http
         changeOrigin: true,

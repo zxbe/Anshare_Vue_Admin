@@ -1,12 +1,12 @@
 {
 
   "name": "anshare-vue-admin",
-  "version": "3.8.0",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
+  "version": "1.0.0",
+  "description": "a admin template",
   "author": "BoBoooooo",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
@@ -23,7 +23,6 @@
     "js-cookie": "2.2.0",
     "echarts": "^3.8.5",
     "screenfull": "3.3.3",
-
     "vue-awesome": "^3.2.0",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.16.0",

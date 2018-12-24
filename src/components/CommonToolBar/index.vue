@@ -51,7 +51,7 @@
           :span="2"
           style="text-align:center"
         >
-          <ElButton
+ <ElButton
             style="margin:5px 0px 0px 10px;padding:10px"
             type="danger"
             size="mini"
@@ -59,8 +59,11 @@
             icon="el-icon-minus"
             @click="removeItem"
           />
+
         </ElCol>
       </ElRow>
+                <el-tooltip class="item" effect="dark" content="添加查询项" placement="right">
+
       <ElButton
         style="margin:0 auto;display:block;margin-top:10px"
         type="primary"
@@ -69,30 +72,35 @@
         icon="el-icon-plus"
         @click="addItem"
       />
+                </el-tooltip>
+
     </div>
 
     <ElRow style="margin-bottom:10px">
       <ElCol :span="24">
         <ElButtonGroup style="float:right">
-          <ElButton
-            icon="el-icon-plus"
-            @click="New()"
-          />
+           <el-tooltip class="item" effect="light" content="新增" placement="top">
+      <el-button  icon="el-icon-plus"
+            @click="New()" ></el-button>
+    </el-tooltip>
 
-          <ElButton
-            icon="el-icon-search"
-            @click="Refresh"
-          />
-          <ElButton
-            icon="el-icon-refresh"
-            @click="ClearOption"
-          />
+             <el-tooltip class="item" effect="light" content="搜索" placement="top">
+      <el-button   icon="el-icon-search"
+            @click="Refresh"></el-button>
+    </el-tooltip>
 
-          <ElButton
-            :icon="buttonVisible"
+<el-tooltip class="item" effect="light" content="刷新" placement="top">
+      <el-button    icon="el-icon-refresh"
+            @click="ClearOption"></el-button>
+    </el-tooltip>
+
+<el-tooltip class="item" effect="light" content="查询条件" placement="top">
+      <el-button    :icon="buttonVisible"
             class="buttonVisible"
-            @click="changeVisible"
-          />
+            @click="changeVisible"></el-button>
+    </el-tooltip>
+
+
         </ElButtonGroup>
       </ElCol>
     </ElRow>
